@@ -3,6 +3,8 @@ Kickstart Guide:
 
   TODO: The very first thing you should do is to run the command `:Tutor` in Neovim.
 
+  #0000000
+
 
   Once you've completed that, you can continue working through **AND READING** the rest
   of the kickstart init.lua.
@@ -28,7 +30,6 @@ Kickstart Guide:
 for when you are first encountering a few different constructs in your Neovim config.
 
 If you experience any errors while trying to install kickstart, run `:checkhealth` for more info.
-
 I hope you enjoy your Neovim journey,
 - TJ
 
@@ -822,6 +823,10 @@ require('lazy').setup({
       vim.cmd.hi 'Comment gui=none'
     end,
   },
+
+  { 'norcalli/nvim-colorizer.lua' },
+  { 'nvchad/volt', lazy = true },
+  { 'nvchad/minty', lazy = true },
   {
     'stevearc/oil.nvim',
     ---@module 'oil'
@@ -1145,3 +1150,9 @@ vim.keymap.set('n', 's', require('substitute').operator, { noremap = true })
 vim.keymap.set('n', 'ss', require('substitute').line, { noremap = true })
 vim.keymap.set('n', 'S', require('substitute').eol, { noremap = true })
 vim.keymap.set('x', 's', require('substitute').visual, { noremap = true })
+
+vim.keymap.set('n', '<leader>cp', function()
+  require('minty.huefy').open()
+end, { desc = 'open huey shade picker' })
+
+require('colorizer').setup()
