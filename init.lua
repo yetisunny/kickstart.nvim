@@ -1,11 +1,6 @@
 --[[
 Kickstart Guide:
 
-  TODO: The very first thing you should do is to run the command `:Tutor` in Neovim.
-
-  #0000000
-
-
   Once you've completed that, you can continue working through **AND READING** the rest
   of the kickstart init.lua.
 
