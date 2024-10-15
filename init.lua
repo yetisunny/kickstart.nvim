@@ -289,7 +289,7 @@ require('lazy').setup({
         elseif mc.hasCursors() then
           mc.clearCursors()
         else
-          -- Default <esc> handler.
+          vim.api.nvim_command 'nohlsearch'
         end
       end)
 
