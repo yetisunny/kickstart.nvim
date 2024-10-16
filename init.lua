@@ -1,5 +1,4 @@
 --[[
-Kickstart Guide:
 
   Once you've completed that, you can continue working through **AND READING** the rest
   of the kickstart init.lua.
@@ -32,6 +31,9 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
 -- Set <space> as the leader key
+
+
+
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
@@ -309,6 +311,8 @@ require('lazy').setup({
       -- match new cursors within visual selections by regex.
       set('v', 'M', mc.matchCursors)
 
+      --disable auto comment insertion
+      --
       -- Rotate visual selection contents.
       set('v', '<leader>t', function()
         mc.transposeCursors(1)
@@ -331,6 +335,7 @@ require('lazy').setup({
       hl(0, 'MultiCursorDisabledSign', { link = 'SignColumn' })
     end,
   },
+  { 'mfussenegger/nvim-dap' },
   {
     'sethen/line-number-change-mode.nvim',
     config = function()
@@ -1312,3 +1317,11 @@ vim.keymap.set('n', '<leader>cp', function()
 end, { desc = 'open huey shade picker' })
 
 require('colorizer').setup()
+
+-- Put this in your init.lua or other config file
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = '*',
+  callback = function()
+    vim.opt_local.formatoptions:remove { 'c', 'r', 'o' }
+  end,
+})
