@@ -32,8 +32,6 @@ P.S. You can delete this when you're done too. It's your config now! :)
 
 -- Set <space> as the leader key
 
-
-
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
@@ -100,7 +98,7 @@ vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
-vim.opt.inccommand = 'split'
+-- vim.opt.inccommand = 'split'
 
 -- Show which line your cursor is on
 vim.opt.cursorline = true
@@ -336,6 +334,15 @@ require('lazy').setup({
     end,
   },
   { 'mfussenegger/nvim-dap' },
+  {
+    'kaiwalter/azure-functions.nvim',
+    config = function()
+      require('azure-functions').setup {
+        compress_log = true,
+      }
+    end,
+  },
+  { 'rcarriga/nvim-dap-ui', dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' } },
   {
     'sethen/line-number-change-mode.nvim',
     config = function()
@@ -987,6 +994,8 @@ require('lazy').setup({
   { 'norcalli/nvim-colorizer.lua' },
   { 'nvchad/volt', lazy = true },
   { 'nvchad/minty', lazy = true },
+
+  { 'mfussenegger/nvim-dap-python', lazy = true },
   {
     'stevearc/oil.nvim',
     ---@module 'oil'
@@ -1325,3 +1334,46 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.formatoptions:remove { 'c', 'r', 'o' }
   end,
 })
+local dap = require 'dap'
+
+dap.adapters.coreclr = {
+  type = 'executable',
+  command = '/usr/local/bin/netcoredbg',
+  args = { '--interpreter=vscode' },
+}
+
+require('dap-python').setup '/usr/bin/python3'
+-- If using the above, then `python -m debugpy --version`
+-- must work in the shell
+
+vim.keymap.set('n', '<F5>', function()
+  require('dap').continue()
+end)
+vim.keymap.set('n', '<F10>', function()
+  require('dap').step_over()
+end)
+vim.keymap.set('n', '<F11>', function()
+  require('dap').step_into()
+end)
+vim.keymap.set('n', '<F12>', function()
+  require('dap').step_out()
+end)
+vim.keymap.set('n', '<Leader>b', function()
+  require('dap').toggle_breakpoint()
+end)
+
+local dapui = require 'dapui'
+
+-- Setup DAP UI
+dapui.setup()
+
+-- Automatically open/close DAP UI
+dap.listeners.after.event_initialized['dapui_config'] = function()
+  dapui.open()
+end
+dap.listeners.before.event_terminated['dapui_config'] = function()
+  dapui.close()
+end
+dap.listeners.before.event_exited['dapui_config'] = function()
+  dapui.close()
+end
