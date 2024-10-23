@@ -218,6 +218,8 @@ require('lazy').setup({
     },
   },
   { 'github/copilot.vim' },
+  { 'dstein64/nvim-scrollview' },
+
   {
     'jake-stewart/multicursor.nvim',
     branch = '1.0',
