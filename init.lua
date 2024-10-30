@@ -219,7 +219,10 @@ require('lazy').setup({
   },
   { 'github/copilot.vim' },
   { 'dstein64/nvim-scrollview' },
-
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+  },
   {
     'jake-stewart/multicursor.nvim',
     branch = '1.0',
@@ -1343,7 +1346,12 @@ dap.adapters.coreclr = {
   command = '/usr/local/bin/netcoredbg',
   args = { '--interpreter=vscode' },
 }
-
+require('lualine').setup {
+  options = {
+    theme = 'catppuccin',
+    -- ... the rest of your lualine config
+  },
+}
 require('dap-python').setup '/usr/bin/python3'
 -- If using the above, then `python -m debugpy --version`
 -- must work in the shell
