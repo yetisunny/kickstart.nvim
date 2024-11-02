@@ -76,8 +76,6 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 vim.opt_global.swapfile = false
-
--- Keep signcolumn on by default
 vim.opt.signcolumn = 'yes'
 
 -- Decrease update time
@@ -218,10 +216,22 @@ require('lazy').setup({
     },
   },
   { 'github/copilot.vim' },
+  { 'tpope/vim-fugitive' },
   { 'dstein64/nvim-scrollview' },
+  { 'tenxsoydev/karen-yank.nvim', config = true },
   {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
+  },
+  {
+    'tversteeg/registers.nvim',
+    cmd = 'Registers',
+    config = true,
+    keys = {
+      { '"', mode = { 'n', 'v' } },
+      { '<C-R>', mode = 'i' },
+    },
+    name = 'registers',
   },
   {
     'jake-stewart/multicursor.nvim',
@@ -1387,3 +1397,27 @@ end
 dap.listeners.before.event_exited['dapui_config'] = function()
   dapui.close()
 end
+
+require('karen-yank').setup {
+  mappings = {
+    -- karen controls the use of registers (and probably talks to the manager when things doesn't work as intended)
+    -- map something like `<leader><leader>` if you use the plugin inverted
+    karen = 'q',
+    -- false: delete into black hole by default and use registers with karen key
+    -- true: use registers by default and delete into black hole with karen key
+    invert = false,
+    -- disable all if `true` or a table of keymaps [possible values: {"s"|"S"|"d"|"D"|"c"|"C"|"x"|"X"|"p"|"P"|"y"|"Y"}]
+    -- "s"/"S" is not mapped by default, due to it's common utilization for plugins like surround or hop
+    disable = { 's', 'S' },
+  },
+  number_regs = {
+    -- use number registers for yanks and cuts
+    enable = true,
+    deduplicate = {
+      -- prevent populating multiple number registers with the same entries
+      enable = true,
+      -- will see `yD` pressed at the beginning of a line as a duplicate of `ydd` pressed in the same line
+      ignore_whitespace = true,
+    },
+  },
+}
