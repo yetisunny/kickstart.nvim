@@ -1402,7 +1402,7 @@ require('karen-yank').setup {
   mappings = {
     -- karen controls the use of registers (and probably talks to the manager when things doesn't work as intended)
     -- map something like `<leader><leader>` if you use the plugin inverted
-    karen = 'q',
+    karen = 'y',
     -- false: delete into black hole by default and use registers with karen key
     -- true: use registers by default and delete into black hole with karen key
     invert = false,
