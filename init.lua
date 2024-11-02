@@ -233,6 +233,10 @@ require('lazy').setup({
     },
     name = 'registers',
   },
+
+  { 'ggandor/flit.nvim', dependencies = {
+    'ggandor/leap.nvim',
+  } },
   {
     'jake-stewart/multicursor.nvim',
     branch = '1.0',
@@ -1420,4 +1424,15 @@ require('karen-yank').setup {
       ignore_whitespace = true,
     },
   },
+}
+require('flit').setup {
+  keys = { f = 'f', F = 'F', t = 't', T = 'T' },
+  -- A string like "nv", "nvo", "o", etc.
+  labeled_modes = 'v',
+  -- Repeat with the trigger key itself.
+  clever_repeat = true,
+  multiline = true,
+  -- Like `leap`s similar argument (call-specific overrides).
+  -- E.g.: opts = { equivalence_classes = {} }
+  opts = {},
 }
