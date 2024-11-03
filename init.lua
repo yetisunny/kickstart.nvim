@@ -1010,7 +1010,7 @@ require('lazy').setup({
     end,
   },
 
-  { 'norcalli/nvim-colorizer.lua' },
+  -- { 'norcalli/nvim-colorizer.lua' },
   { 'nvchad/volt', lazy = true },
   { 'nvchad/minty', lazy = true },
 
@@ -1344,7 +1344,7 @@ vim.keymap.set('n', '<leader>cp', function()
   require('minty.huefy').open()
 end, { desc = 'open huey shade picker' })
 
-require('colorizer').setup()
+-- require('colorizer').setup()
 
 -- Put this in your init.lua or other config file
 vim.api.nvim_create_autocmd('FileType', {
@@ -1435,4 +1435,17 @@ require('flit').setup {
   -- Like `leap`s similar argument (call-specific overrides).
   -- E.g.: opts = { equivalence_classes = {} }
   opts = {},
+}
+local hipatterns = require 'mini.hipatterns'
+hipatterns.setup {
+  highlighters = {
+    -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
+    fixme = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
+    hack = { pattern = '%f[%w]()HACK()%f[%W]', group = 'MiniHipatternsHack' },
+    todo = { pattern = '%f[%w]()TODO()%f[%W]', group = 'MiniHipatternsTodo' },
+    note = { pattern = '%f[%w]()NOTE()%f[%W]', group = 'MiniHipatternsNote' },
+
+    -- Highlight hex color strings (`#rrggbb`) using that color
+    hex_color = hipatterns.gen_highlighter.hex_color {},
+  },
 }
