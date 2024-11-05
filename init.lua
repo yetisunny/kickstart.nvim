@@ -1363,6 +1363,8 @@ dap.adapters.coreclr = {
 require('lualine').setup {
   options = {
     theme = 'catppuccin',
+    'filename',
+    path = 1,
     -- ... the rest of your lualine config
   },
 }
