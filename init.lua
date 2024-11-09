@@ -1469,7 +1469,7 @@ vim.api.nvim_create_augroup('MyFileTypeMappings', { clear = true })
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'tex', 'plaintex', 'markdown', 'text' },
   callback = function()
-    vim.api.nvim_buf_set_keymap(0, 'n', 'j', 'gj', { noremap = true, silent = true })
-    vim.api.nvim_buf_set_keymap(0, 'n', 'k', 'gk', { noremap = true, silent = true })
+    vim.api.nvim_buf_set_keymap(0, 'n', 'j', 'v:count ? "j" : "gj"', { noremap = true, expr = true, silent = true })
+    vim.api.nvim_buf_set_keymap(0, 'n', 'k', 'v:count ? "k" : "gk"', { noremap = true, expr = true, silent = true })
   end,
 })
