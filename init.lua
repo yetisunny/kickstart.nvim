@@ -1462,3 +1462,14 @@ hipatterns.setup {
     hex_color = hipatterns.gen_highlighter.hex_color {},
   },
 }
+
+-- Automatically remap j and k to gj and gk for text and latex files
+vim.api.nvim_create_augroup('MyFileTypeMappings', { clear = true })
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'tex', 'plaintex', 'markdown', 'text' },
+  callback = function()
+    vim.api.nvim_buf_set_keymap(0, 'n', 'j', 'gj', { noremap = true, silent = true })
+    vim.api.nvim_buf_set_keymap(0, 'n', 'k', 'gk', { noremap = true, silent = true })
+  end,
+})
