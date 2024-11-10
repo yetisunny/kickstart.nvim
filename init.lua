@@ -447,6 +447,7 @@ require('lazy').setup({
       vim.g.vimtex_view_method = 'zathura'
     end,
   },
+  { 'kevinhwang91/nvim-bqf' },
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
