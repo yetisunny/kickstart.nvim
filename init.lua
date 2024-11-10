@@ -223,16 +223,16 @@ require('lazy').setup({
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
-  {
-    'tversteeg/registers.nvim',
-    cmd = 'Registers',
-    config = true,
-    keys = {
-      { '"', mode = { 'n', 'v' } },
-      { '<C-R>', mode = 'i' },
-    },
-    name = 'registers',
-  },
+  -- {
+  --   'tversteeg/registers.nvim',
+  --   cmd = 'Registers',
+  --   config = true,
+  --   keys = {
+  --     { '"', mode = { 'n', 'v' } },
+  --     { '<C-R>', mode = 'i' },
+  --   },
+  --   name = 'registers',
+  -- },
   {
     'mikesmithgh/kitty-scrollback.nvim',
     enabled = true,
