@@ -1479,3 +1479,10 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.api.nvim_buf_set_keymap(0, 'n', 'k', 'v:count ? "k" : "gk"', { noremap = true, expr = true, silent = true })
   end,
 })
+
+vim.api.nvim_create_autocmd('BufReadPost', {
+  desc = 'Open file at the last position it was edited earlier',
+  group = misc_augroup,
+  pattern = '*',
+  command = 'silent! normal! g`"zv',
+})
