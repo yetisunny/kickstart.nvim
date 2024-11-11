@@ -1192,6 +1192,7 @@ require('lazy').setup({
     },
   },
 })
+
 vim.cmd.colorscheme 'catppuccin'
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
@@ -1579,3 +1580,10 @@ vim.api.nvim_set_hl(0, 'LeapMatch', {
 -- you don't even miss it.
 require('leap').opts.highlight_unlabeled_phase_one_targets = true
 require('leap').opts.safe_labels = {}
+require('leap').opts.preview_filter = function()
+  return false
+end
+-- Define custom highlight groups
+
+-- vim.api.nvim_set_hl(0, 'Search', { bg = '#cba6f7', fg = '#ffffff' })
+-- vim.api.nvim_set_hl(0, 'IncSearch', { bg = '#cba6f7', fg = '#ffffff' })
