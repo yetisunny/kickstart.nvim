@@ -235,9 +235,10 @@ require('lazy').setup({
       require('kitty-scrollback').setup()
     end,
   },
-  { 'ggandor/flit.nvim', dependencies = {
-    'ggandor/leap.nvim',
-  } },
+  { 'ggandor/leap.nvim' },
+  -- { 'ggandor/flit.nvim', dependencies = {
+  --   'ggandor/leap.nvim',
+  -- } },
   {
     'jake-stewart/multicursor.nvim',
     branch = '1.0',
@@ -1101,7 +1102,7 @@ require('lazy').setup({
       -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
-      require('mini.surround').setup()
+      -- require('mini.surround').setup()
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
@@ -1394,10 +1395,10 @@ require('oil').setup {
   },
 } -- Lua
 
-vim.keymap.set('n', 's', require('substitute').operator, { noremap = true })
-vim.keymap.set('n', 'ss', require('substitute').line, { noremap = true })
-vim.keymap.set('n', 'S', require('substitute').eol, { noremap = true })
-vim.keymap.set('x', 's', require('substitute').visual, { noremap = true })
+-- vim.keymap.set('n', 's', require('substitute').operator, { noremap = true })
+-- vim.keymap.set('n', 'ss', require('substitute').line, { noremap = true })
+-- vim.keymap.set('n', 'S', require('substitute').eol, { noremap = true })
+-- vim.keymap.set('x', 's', require('substitute').visual, { noremap = true })
 
 vim.keymap.set('n', '<leader>cp', function()
   require('minty.huefy').open()
@@ -1486,17 +1487,17 @@ require('karen-yank').setup {
     },
   },
 }
-require('flit').setup {
-  keys = { f = 'f', F = 'F', t = 't', T = 'T' },
-  -- A string like "nv", "nvo", "o", etc.
-  labeled_modes = 'v',
-  -- Repeat with the trigger key itself.
-  clever_repeat = true,
-  multiline = true,
-  -- Like `leap`s similar argument (call-specific overrides).
-  -- E.g.: opts = { equivalence_classes = {} }
-  opts = {},
-}
+-- require('flit').setup {
+--   keys = { f = 'f', F = 'F', t = 't', T = 'T' },
+--   -- A string like "nv", "nvo", "o", etc.
+--   labeled_modes = 'v',
+--   -- Repeat with the trigger key itself.
+--   clever_repeat = true,
+--   multiline = true,
+--   -- Like `leap`s similar argument (call-specific overrides).
+--   -- E.g.: opts = { equivalence_classes = {} }
+--   opts = {},
+-- }
 local hipatterns = require 'mini.hipatterns'
 hipatterns.setup {
   highlighters = {
@@ -1554,7 +1555,6 @@ end)
 vim.keymap.set('n', '<C-s>', function()
   harpoon:list():select(4)
 end)
-
 -- Toggle previous & next buffers stored within Harpoon list
 vim.keymap.set('n', '<C-S-P>', function()
   harpoon:list():prev()
@@ -1562,3 +1562,20 @@ end)
 vim.keymap.set('n', '<C-S-N>', function()
   harpoon:list():next()
 end)
+
+vim.keymap.set('n', 's', '<Plug>(leap)')
+
+-- The below settings make Leap's highlighting closer to what you've been
+-- used to in Lightspeed.
+
+vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' }) -- or some grey
+vim.api.nvim_set_hl(0, 'LeapMatch', {
+  -- For light themes, set to 'black' or similar.
+  fg = 'white',
+  bold = true,
+  nocombine = true,
+})
+-- Deprecated option. Try it without this setting first, you might find
+-- you don't even miss it.
+require('leap').opts.highlight_unlabeled_phase_one_targets = true
+require('leap').opts.safe_labels = {}
