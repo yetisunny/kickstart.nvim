@@ -1638,6 +1638,12 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
+require('spider').setup {
+  skipInsignificantPunctuation = false,
+  consistentOperatorPending = false, -- see "Consistent Operator-pending Mode" in the README
+  subwordMovement = true,
+  customPatterns = {}, -- check "Custom Movement Patterns" in the README for details
+}
 
 vim.keymap.set({ 'n', 'o', 'x' }, 'w', "<cmd>lua require('spider').motion('w')<CR>", { desc = 'Spider-w' })
 vim.keymap.set({ 'n', 'o', 'x' }, 'e', "<cmd>lua require('spider').motion('e')<CR>", { desc = 'Spider-e' })
