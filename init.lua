@@ -216,6 +216,8 @@ require('lazy').setup({
     },
   },
   { 'github/copilot.vim' },
+  { 'chrisgrieser/nvim-spider', lazy = true },
+  -- { 'chaoren/vim-wordmotion' },
   { 'tpope/vim-fugitive' },
   { 'dstein64/nvim-scrollview' },
   { 'tenxsoydev/karen-yank.nvim', config = true },
@@ -1636,3 +1638,7 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
+
+vim.keymap.set({ 'n', 'o', 'x' }, 'w', "<cmd>lua require('spider').motion('w')<CR>", { desc = 'Spider-w' })
+vim.keymap.set({ 'n', 'o', 'x' }, 'e', "<cmd>lua require('spider').motion('e')<CR>", { desc = 'Spider-e' })
+vim.keymap.set({ 'n', 'o', 'x' }, 'b', "<cmd>lua require('spider').motion('b')<CR>", { desc = 'Spider-b' })
