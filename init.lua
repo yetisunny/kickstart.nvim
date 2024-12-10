@@ -1129,6 +1129,14 @@ require('lazy').setup({
       },
     },
   },
+  {
+    'rachartier/tiny-inline-diagnostic.nvim',
+    event = 'VeryLazy', -- Or `LspAttach`
+    priority = 1000, -- needs to be loaded in first
+    config = function()
+      require('tiny-inline-diagnostic').setup()
+    end,
+  },
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
   { -- Collection of various small independent plugins/modules
@@ -1643,9 +1651,10 @@ require('spider').setup {
   subwordMovement = true,
   customPatterns = {}, -- check "Custom Movement Patterns" in the README for details
 }
-
 vim.keymap.set({ 'n', 'o', 'x' }, 'w', "<cmd>lua require('spider').motion('w')<CR>", { desc = 'Spider-w' })
 vim.keymap.set({ 'n', 'o', 'x' }, 'e', "<cmd>lua require('spider').motion('e')<CR>", { desc = 'Spider-e' })
 vim.keymap.set({ 'n', 'o', 'x' }, 'b', "<cmd>lua require('spider').motion('b')<CR>", { desc = 'Spider-b' })
 
 vim.keymap.set({ 'n', 'o', 'x' }, 'W', "<cmd>lua require('spider').motion('W')<CR>", { desc = 'Spider-W' })
+
+vim.diagnostic.config { virtual_text = false }
