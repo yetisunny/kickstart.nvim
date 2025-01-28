@@ -15,6 +15,7 @@ return {
     'hrsh7th/cmp-nvim-lsp',
   },
   config = function()
+    require('java').setup()
     -- Brief aside: **What is LSP?**
     --
     -- LSP is an initialism you've probably heard, but might not understand what it is.
@@ -165,6 +166,16 @@ return {
       ts_ls = {},
       --
 
+      pyright = {
+        settings = {
+          python = {
+            analysis = {
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+            },
+          },
+        },
+      },
       lua_ls = {
         -- cmd = {...},
         -- filetypes = { ...},
@@ -209,5 +220,6 @@ return {
         end,
       },
     }
+    require('lspconfig').jdtls.setup {}
   end,
 }
