@@ -15,7 +15,7 @@ return {
     'hrsh7th/cmp-nvim-lsp',
   },
   config = function()
-    require('java').setup()
+    -- require('java').setup()
     -- Brief aside: **What is LSP?**
     --
     -- LSP is an initialism you've probably heard, but might not understand what it is.
