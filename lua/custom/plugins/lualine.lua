@@ -11,7 +11,7 @@ return {
       sections = {
         lualine_a = { 'mode' },
         lualine_b = { 'branch', 'diagnostics' },
-        lualine_c = { 'filename' },
+        lualine_c = {}, -- Remove filename from here
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' },
@@ -19,12 +19,14 @@ return {
       inactive_sections = {
         lualine_a = {},
         lualine_b = {},
-        lualine_c = { 'filename' },
+        lualine_c = {},
         lualine_x = { 'location' },
         lualine_y = {},
         lualine_z = {},
       },
-      tabline = {},
+      tabline = { -- Add filename to the top
+        lualine_a = { 'filename' },
+      },
       extensions = { 'nvim-tree' },
     }
   end,
