@@ -33,8 +33,8 @@ end)
 -- Enable break indent
 vim.opt.breakindent = true
 
--- Save undo history
-vim.opt.undofile = true
+-- -- Save undo history
+-- vim.opt.undofile = true
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
@@ -236,3 +236,11 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 
 vim.keymap.set('n', 's', '<Plug>(leap)')
 vim.cmd.colorscheme 'catppuccin'
+
+--autocommand
+vim.api.nvim_create_autocmd('VimEnter', {
+  callback = function()
+    --call clearjump command
+    vim.cmd 'clearjumps'
+  end,
+})
