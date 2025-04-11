@@ -66,9 +66,7 @@ return {
 
         map('gr', function()
           require('telescope.builtin').lsp_references {
-            fname_width = 100, -- Or whatever larger value you prefer
-            -- You can add other options here too, e.g.:
-            -- include_declaration = false,
+            fname_width = 100 
           }
         end, '[G]oto [R]eferences')
 
