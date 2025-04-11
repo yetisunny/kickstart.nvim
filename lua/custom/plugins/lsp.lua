@@ -16,6 +16,7 @@ return {
   },
   config = function()
     require('java').setup()
+
     -- Brief aside: **What is LSP?**
     --
     -- LSP is an initialism you've probably heard, but might not understand what it is.
@@ -63,8 +64,13 @@ return {
         --  To jump back, press <C-t>.
         map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
-        -- Find references for the word under your cursor.
-        map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+        map('gr', function()
+          require('telescope.builtin').lsp_references {
+            fname_width = 100, -- Or whatever larger value you prefer
+            -- You can add other options here too, e.g.:
+            -- include_declaration = false,
+          }
+        end, '[G]oto [R]eferences')
 
         -- Jump to the implementation of the word under your cursor.
         --  Useful when your language has ways of declaring types without an actual implementation.
