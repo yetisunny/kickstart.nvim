@@ -71,12 +71,16 @@ return {
 
         -- Jump to the implementation of the word under your cursor.
         --  Useful when your language has ways of declaring types without an actual implementation.
-        map('gri', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+        map('gI', function()
+          require('telescope.builtin').lsp_implementations { fname_width = 100 }
+        end, '[G]oto [I]mplementation')
 
         -- Jump to the definition of the word under your cursor.
         --  This is where a variable was first declared, or where a function is defined, etc.
         --  To jump back, press <C-t>.
-        map('grd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+        map('gd', function()
+          require('telescope.builtin').lsp_definitions { fname_width = 100 }
+        end, '[G]oto [D]efinition')
 
         -- WARN: This is not Goto Definition, this is Goto Declaration.
         --  For example, in C this would take you to the header.
@@ -257,5 +261,5 @@ return {
       },
     }
   end,
-  require("java").setup()
+  require('java').setup(),
 }
