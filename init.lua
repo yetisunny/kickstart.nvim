@@ -1,4 +1,6 @@
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
+vim.deprecate = function() end
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
