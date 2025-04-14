@@ -77,11 +77,19 @@ return {
           require('telescope.builtin').lsp_implementations { fname_width = 100 }
         end, '[G]oto [I]mplementation')
 
+        map('gvI', function()
+          require('telescope.builtin').lsp_implementations { fname_width = 100, jump_type = 'vsplit' }
+        end, '[G]oto [I]mplementation')
         -- Jump to the definition of the word under your cursor.
         --  This is where a variable was first declared, or where a function is defined, etc.
         --  To jump back, press <C-t>.
         map('gd', function()
           require('telescope.builtin').lsp_definitions { fname_width = 100 }
+        end, '[G]oto [D]efinition')
+
+        map('gvd', function()
+          --open definition in a vertical split
+          require('telescope.builtin').lsp_definitions { fname_width = 100, jump_type = 'vsplit' }
         end, '[G]oto [D]efinition')
 
         -- WARN: This is not Goto Definition, this is Goto Declaration.
