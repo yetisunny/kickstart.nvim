@@ -81,7 +81,12 @@ return { -- Autocompletion
         copilot = {
           name = 'copilot',
           module = 'blink-cmp-copilot',
-          score_offset = 100,
+          score_offset = 200,
+          async = true,
+        },
+        buffer = {
+          name = 'buffer',
+          score_offset =-10,
           async = true,
         },
       },
@@ -91,7 +96,7 @@ return { -- Autocompletion
 
     -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
     -- which automatically downloads a prebuilt binary when enabled.
-    --
+    -- this default
     -- By default, we use the Lua implementation instead, but you may enable
     -- the rust implementation via `'prefer_rust_with_warning'`
     --
