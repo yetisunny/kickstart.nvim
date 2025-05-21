@@ -246,10 +246,3 @@ vim.api.nvim_create_autocmd('VimEnter', {
     vim.cmd 'clearjumps'
   end,
 })
---autocommand
-vim.api.nvim_create_autocmd('VimEnter', {
-  callback = function()
-    --call clearjump command
-    require('telescope.builtin').oldfiles{cwd_only = true}
-  end,
-})
