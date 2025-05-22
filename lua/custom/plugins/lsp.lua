@@ -17,6 +17,7 @@ return {
   },
   config = function()
     -- Brief aside: **What is LSP?**
+    require('java').setup()
     --
     -- LSP is an initialism you've probably heard, but might not understand what it is.
     --
@@ -271,5 +272,4 @@ return {
       },
     }
   end,
-  require('java').setup(),
 }
