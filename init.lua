@@ -172,8 +172,8 @@ require('lazy').setup({
   -- LSP Plugins
   {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
-    -- used for completion, annotations and signatures of Neovim apis
-    'folke/lazydev.nvim',
+      -- used for completion, annotations and signatures of Neovim apis
+      'folke/lazydev.nvim',
     ft = 'lua',
     opts = {
       library = {
@@ -237,6 +237,7 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   command = 'silent! normal! g`"zv',
 })
 
+
 vim.keymap.set('n', 's', '<Plug>(leap)')
 vim.cmd.colorscheme 'catppuccin'
 
@@ -247,3 +248,4 @@ vim.api.nvim_create_autocmd('VimEnter', {
     vim.cmd 'clearjumps'
   end,
 })
+

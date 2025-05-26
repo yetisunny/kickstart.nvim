@@ -5,9 +5,10 @@ return {
     -- Automatically install LSPs and related tools to stdpath for Neovim
     -- Mason must be loaded before its dependents so we need to set it up here.
     -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
-    { 'williamboman/mason.nvim', opts = {} },
+    { 'williamboman/mason.nvim', config = true },
     'williamboman/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
+    'nvim-java/nvim-java',
 
     -- Useful status updates for LSP.
     { 'j-hui/fidget.nvim', opts = {} },
@@ -17,7 +18,6 @@ return {
   },
   config = function()
     -- Brief aside: **What is LSP?**
-    require('java').setup()
     --
     -- LSP is an initialism you've probably heard, but might not understand what it is.
     --
@@ -65,10 +65,10 @@ return {
 
         -- Execute a code action, usually your cursor needs to be on top of an error
         -- or a suggestion from your LSP for this to activate.
-        map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
+        map('<C-.>', vim.lsp.buf.code_action, 'Code Action', { 'n', 'x' })
 
         -- Find references for the word under your cursor.
-        map('grr', function ()
+        map('grr', function()
           require('telescope.builtin').lsp_references { fname_width = 100 }
         end, '[G]oto [R]eferences')
 
@@ -258,16 +258,17 @@ return {
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {
-      ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
-      automatic_installation = false,
       handlers = {
         function(server_name)
           local server = servers[server_name] or {}
           -- This handles overriding only values explicitly passed
           -- by the server configuration above. Useful when disabling
-          -- certain features of an LSP (for example, turning off formatting for ts_ls)
+          -- certain features of an LSP (for example, turning off formatting for tsserver)
           server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
           require('lspconfig')[server_name].setup(server)
+        end,
+        jdtls = function()
+          require('java').setup()
         end,
       },
     }

@@ -5,5 +5,7 @@ return {
   init = function()
     -- VimTeX configuration goes here, e.g.
     vim.g.vimtex_view_method = 'zathura'
+    -- disable spellchecking in VimTeX
+    vim.g.vimtex_spellcheck_enabled = 0
   end,
 }

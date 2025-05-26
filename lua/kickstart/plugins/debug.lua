@@ -7,9 +7,7 @@
 -- kickstart.nvim and not kitchen-sink.nvim ;)
 
 return {
-  -- NOTE: Yes, you can install new plugins here!
   'mfussenegger/nvim-dap',
-  -- NOTE: And you can specify dependencies as well
   dependencies = {
     -- Creates a beautiful debugger UI
     'rcarriga/nvim-dap-ui',
@@ -24,9 +22,11 @@ return {
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
   },
+
   keys = function(_, keys)
     local dap = require 'dap'
     local dapui = require 'dapui'
+
     return {
       -- Basic debugging keymaps, feel free to change to your liking!
       { '<F5>', dap.continue, desc = 'Debug: Start/Continue' },
@@ -99,6 +99,23 @@ return {
         -- On Windows delve must be run attached or it crashes.
         -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
         detached = vim.fn.has 'win32' == 0,
+      },
+    }
+    dap.adapters.python = {
+      type = 'executable',
+      command = vim.fn.exepath 'python', -- or path to python with debugpy installed
+      args = { '-m', 'debugpy.adapter' },
+    }
+
+    dap.configurations.python = {
+      {
+        type = 'python',
+        request = 'launch',
+        name = 'Launch file',
+        program = '${file}', -- This will launch the current file
+        pythonPath = function()
+          return vim.fn.exepath 'python'
+        end,
       },
     }
   end,
