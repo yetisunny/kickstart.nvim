@@ -6,14 +6,14 @@ return { -- Autoformat
     {
       '<leader>f',
       function()
-        require('conform').format { async = true, lsp_format = 'fallback' }
+        require('conform').format { async = true, lsp_format = 'never' }
       end,
       mode = '',
       desc = '[F]ormat buffer',
     },
   },
   opts = {
-    notify_on_error = false,
+    notify_on_error = true,
     format_on_save = function(bufnr)
       -- Disable "format_on_save lsp_fallback" for languages that don't
       -- have a well standardized coding style. You can add additional
@@ -23,7 +23,7 @@ return { -- Autoformat
       if disable_filetypes[vim.bo[bufnr].filetype] then
         lsp_format_opt = 'never'
       else
-        lsp_format_opt = 'fallback'
+        lsp_format_opt = 'never'
       end
       return {
         timeout_ms = 500,
@@ -36,7 +36,8 @@ return { -- Autoformat
       -- python = { "isort", "black" },
       --
       -- You can use 'stop_after_first' to run the first available formatter from the list
-      -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      javascript = { 'prettier', 'prettierd', stop_after_first = true },
+      typescript = { 'prettier', 'prettierd', stop_after_first = true },
     },
   },
 }

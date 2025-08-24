@@ -27,7 +27,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- it can fuzzy find! It's more than just a "file finder", it can search
     -- many different aspects of Neovim, your workspace, LSP, and more!
     --
-    -- The easiest way to use Telescope, is to start by doing something like:
+    -- The easiest way to use Telescope, is to start by doing something like:tnele
     --  :Telescope help_tags
     --
     -- After running this command, a window will open up and you're able to
