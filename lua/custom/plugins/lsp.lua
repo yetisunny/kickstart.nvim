@@ -211,7 +211,21 @@ return {
     local servers = {
       -- clangd = {},
       -- gopls = {},
-      basedpyright = {},
+      basedpyright = {
+        settings = {
+          basedpyright = {
+            analysis = {
+              useLibraryCodeForTypes = true,
+              typeCheckingMode = 'basic',
+              diagnosticMode = 'workspace',
+              autoSearchPath = true,
+              inlayHints = {
+                callArgumentNames = true,
+              },
+            },
+          },
+        },
+      },
       -- rust_analyzer = {},
       -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
       --
@@ -221,8 +235,7 @@ return {
       -- But for many setups, the LSP (`ts_ls`) will work just fine
       ts_ls = {},
       -- we need to use an old version, I installed this through mason
-      angularls = {
-      },
+      angularls = {},
       --
 
       lua_ls = {
