@@ -5,8 +5,8 @@ return {
     -- Automatically install LSPs and related tools to stdpath for Neovim
     -- Mason must be loaded before its dependents so we need to set it up here.
     -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
-    { 'williamboman/mason.nvim', config = true },
-    'williamboman/mason-lspconfig.nvim',
+    { 'mason-org/mason.nvim', opts = {} },
+    { 'mason-org/mason-lspconfig.nvim' },
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     'nvim-java/nvim-java',
 
@@ -65,33 +65,19 @@ return {
 
         -- Execute a code action, usually your cursor needs to be on top of an error
         -- or a suggestion from your LSP for this to activate.
-        map('<C-.>', vim.lsp.buf.code_action, 'Code Action', { 'n', 'x' })
+        map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
 
         -- Find references for the word under your cursor.
-        map('grr', function()
-          require('telescope.builtin').lsp_references { fname_width = 100 }
-        end, '[G]oto [R]eferences')
+        map('grr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
 
         -- Jump to the implementation of the word under your cursor.
         --  Useful when your language has ways of declaring types without an actual implementation.
-        map('gI', function()
-          require('telescope.builtin').lsp_implementations { fname_width = 100 }
-        end, '[G]oto [I]mplementation')
+        map('gri', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
 
-        map('gvI', function()
-          require('telescope.builtin').lsp_implementations { fname_width = 100, jump_type = 'vsplit' }
-        end, '[G]oto [I]mplementation')
         -- Jump to the definition of the word under your cursor.
         --  This is where a variable was first declared, or where a function is defined, etc.
         --  To jump back, press <C-t>.
-        map('gd', function()
-          require('telescope.builtin').lsp_definitions { fname_width = 100 }
-        end, '[G]oto [D]efinition')
-
-        map('gvd', function()
-          --open definition in a vertical split
-          require('telescope.builtin').lsp_definitions { fname_width = 100, jump_type = 'vsplit' }
-        end, '[G]oto [D]efinition')
+        map('grd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
         -- WARN: This is not Goto Definition, this is Goto Declaration.
         --  For example, in C this would take you to the header.
@@ -210,7 +196,7 @@ return {
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
     local servers = {
       -- clangd = {},
-      gopls = {},
+      -- gopls = {},
       -- pyright = {},
       -- rust_analyzer = {},
       -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -238,6 +224,22 @@ return {
       },
     }
 
+    require('java').setup {
+      -- Your custom jdtls settings goes here
+    }
+
+    require('lspconfig').jdtls.setup {
+      -- Your custom nvim-java configuration goes here
+    }
+
+    -- The following loop will configure each server with the capabilities we defined above.
+    -- This will ensure that all servers have the same base configuration, but also
+    -- allow for server-specific overrides.
+    for server_name, server_config in pairs(servers) do
+      server_config.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server_config.capabilities or {})
+      require('lspconfig')[server_name].setup(server_config)
+    end
+
     -- Ensure the servers and tools above are installed
     --
     -- To check the current status of installed tools and/or manually install
@@ -256,21 +258,5 @@ return {
       'stylua', -- Used to format Lua code
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
-    require('mason-lspconfig').setup {
-      handlers = {
-        function(server_name)
-          local server = servers[server_name] or {}
-          -- This handles overriding only values explicitly passed
-          -- by the server configuration above. Useful when disabling
-          -- certain features of an LSP (for example, turning off formatting for tsserver)
-          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-          require('lspconfig')[server_name].setup(server)
-        end,
-        jdtls = function()
-          require('java').setup()
-        end,
-      },
-    }
   end,
 }
