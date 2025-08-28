@@ -220,6 +220,9 @@ return {
       --
       -- But for many setups, the LSP (`ts_ls`) will work just fine
       ts_ls = {},
+      -- we need to use an old version, I installed this through mason
+      angularls = {
+      },
       --
 
       lua_ls = {
