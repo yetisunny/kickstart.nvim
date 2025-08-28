@@ -65,19 +65,33 @@ return {
 
         -- Execute a code action, usually your cursor needs to be on top of an error
         -- or a suggestion from your LSP for this to activate.
-        map('<C-.>', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
+        map('<C-.>', vim.lsp.buf.code_action, 'Code Action', { 'n', 'x' })
 
         -- Find references for the word under your cursor.
-        map('grr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+        map('grr', function()
+          require('telescope.builtin').lsp_references { fname_width = 100 }
+        end, '[G]oto [R]eferences')
 
         -- Jump to the implementation of the word under your cursor.
         --  Useful when your language has ways of declaring types without an actual implementation.
-        map('gi', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+        map('gI', function()
+          require('telescope.builtin').lsp_implementations { fname_width = 100 }
+        end, '[G]oto [I]mplementation')
 
+        map('gvI', function()
+          require('telescope.builtin').lsp_implementations { fname_width = 100, jump_type = 'vsplit' }
+        end, '[G]oto [I]mplementation')
         -- Jump to the definition of the word under your cursor.
         --  This is where a variable was first declared, or where a function is defined, etc.
         --  To jump back, press <C-t>.
-        map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+        map('gd', function()
+          require('telescope.builtin').lsp_definitions { fname_width = 100 }
+        end, '[G]oto [D]efinition')
+
+        map('gvd', function()
+          --open definition in a vertical split
+          require('telescope.builtin').lsp_definitions { fname_width = 100, jump_type = 'vsplit' }
+        end, '[G]oto [D]efinition')
 
         -- WARN: This is not Goto Definition, this is Goto Declaration.
         --  For example, in C this would take you to the header.
