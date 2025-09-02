@@ -236,6 +236,18 @@ return {
       ts_ls = {},
       -- we need to use an old version, I installed this through mason
       angularls = {},
+      tinymist = {},
+      tailwindcss = {
+        filetypes = { 'html', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue', 'svelte' },
+        init_options = {
+          userLanguages = {
+            astro = 'html',
+            elixir = 'html',
+            heex = 'html',
+            heex_eex = 'html',
+          },
+        },
+      },
       --
 
       lua_ls = {
