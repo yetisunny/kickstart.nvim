@@ -248,6 +248,7 @@ return {
           },
         },
       },
+      jsonls = {},
       --
 
       lua_ls = {
