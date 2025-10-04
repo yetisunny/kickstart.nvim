@@ -1,7 +1,7 @@
 return {
   'zbirenbaum/copilot.lua',
   cmd = 'Copilot',
-  enabled = true, -- Disable by default, enable manually if needed
+  enabled = false, -- Disable by default, enable manually if needed
   event = 'InsertEnter',
   config = function()
     require('copilot').setup {

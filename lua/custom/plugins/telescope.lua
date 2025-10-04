@@ -6,7 +6,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     'nvim-lua/plenary.nvim',
     { -- If encountering errors, see telescope-fzf-native README for installation instructions
       'nvim-telescope/telescope-fzf-native.nvim',
-
+      'nvim-telescope/telescope-live-grep-args.nvim',
       -- `build` is used to run some command when the plugin is installed/updated.
       -- This is only run then, not every time Neovim starts up.
       build = 'make',
@@ -85,6 +85,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
     vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
     vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
+    vim.keymap.set('n', '<leader>fg', ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
     vim.keymap.set('n', '<leader>s.', function()
       builtin.oldfiles { cwd_only = true }
     end, { desc = '[S]earch Recent Files ("." for repeat)' })
