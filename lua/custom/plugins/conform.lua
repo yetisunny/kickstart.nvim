@@ -11,6 +11,8 @@ return {
         json = { 'jq' },
         html = { 'prettier' },
         css = { 'prettier' },
+        java = { 'clang-format' },
+        python = { 'black' },
       },
     }
   end,
