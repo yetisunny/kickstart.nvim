@@ -89,7 +89,6 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
-
 -- -- TIP: Disable arrow keys in normal mode
 -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
 -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
@@ -172,8 +171,8 @@ require('lazy').setup({
   -- LSP Plugins
   {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
-      -- used for completion, annotations and signatures of Neovim apis
-      'folke/lazydev.nvim',
+    -- used for completion, annotations and signatures of Neovim apis
+    'folke/lazydev.nvim',
     ft = 'lua',
     opts = {
       library = {
@@ -223,7 +222,7 @@ vim.api.nvim_create_autocmd('FileType', {
 -- Automatically remap j and k to gj and gk for text and latex files
 vim.api.nvim_create_augroup('MyFileTypeMappings', { clear = true })
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'tex', 'plaintex', 'markdown', 'text' },
+  pattern = { 'tex', 'plaintex', 'markdown', 'text', 'typst' },
   callback = function()
     vim.api.nvim_buf_set_keymap(0, 'n', 'j', 'v:count ? "j" : "gj"', { noremap = true, expr = true, silent = true })
     vim.api.nvim_buf_set_keymap(0, 'n', 'k', 'v:count ? "k" : "gk"', { noremap = true, expr = true, silent = true })
@@ -237,7 +236,6 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   command = 'silent! normal! g`"zv',
 })
 
-
 vim.keymap.set('n', 's', '<Plug>(leap)')
 vim.cmd.colorscheme 'catppuccin'
 
@@ -250,17 +248,63 @@ vim.api.nvim_create_autocmd('VimEnter', {
 })
 
 -- Check and create .rgignore if it doesn't exist
-local home = os.getenv "HOME"
-local rgignore_path = home .. "/.rgignore"
-local rgignore_file = io.open(rgignore_path, "r")
+local home = os.getenv 'HOME'
+local rgignore_path = home .. '/.rgignore'
+local rgignore_file = io.open(rgignore_path, 'r')
 
 if not rgignore_file then
-  rgignore_file = io.open(rgignore_path, "w")
+  rgignore_file = io.open(rgignore_path, 'w')
   if rgignore_file then
-    rgignore_file:write "!.env*\n"
-    rgignore_file:write "!.gitignore\n"
+    rgignore_file:write '!.env*\n'
+    rgignore_file:write '!.gitignore\n'
     rgignore_file:close()
   end
 else
   rgignore_file:close()
 end
+
+-- Copies the current directory structure as a tree to the system clipboard
+vim.api.nvim_create_user_command('CopyTree', function()
+  -- Use the 'tree' command if available, otherwise fallback to 'find'
+  local handle = io.popen 'tree -L 3 -a -I ".git" 2>/dev/null || find . -print | sed "s|[^/]*/| |g"'
+
+  local result = handle:read '*a'
+  handle:close()
+
+  -- Copy to system clipboard
+  vim.fn.setreg('+', result)
+  print 'Directory tree copied to clipboard!'
+end, {})
+
+local function on_jump()
+  -- Small delay to let the screen update
+  vim.defer_fn(function()
+    local line = vim.api.nvim_get_current_line()
+    local word_count = 0
+    for _ in line:gmatch '%w+' do
+      word_count = word_count + 1
+    end
+
+    if word_count > 3 then
+      pcall(function()
+        require('hop').hint_words {
+          current_line_only = true,
+          keys = 'jmklnhueyio,.',
+        }
+      end)
+    end
+  end, 20) -- delay in milliseconds
+end
+
+local function smart_move(key)
+  return function()
+    local count = vim.v.count1
+    vim.cmd('normal! ' .. count .. key)
+    if count > 1 then
+      on_jump()
+    end
+  end
+end
+
+vim.keymap.set('n', 'j', smart_move 'j', { noremap = true, silent = true })
+vim.keymap.set('n', 'k', smart_move 'k', { noremap = true, silent = true })

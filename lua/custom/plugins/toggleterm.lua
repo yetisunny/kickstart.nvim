@@ -5,6 +5,7 @@ require("toggleterm").setup({
   size = 20,
   open_mapping = [[<leader>tt]],  -- open terminal with leader + t
   hide_numbers = true,
+  auto_scroll = false,
   shade_filetypes = {},
   shade_terminals = true,
   shading_factor = 2,
