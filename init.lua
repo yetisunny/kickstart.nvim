@@ -285,7 +285,7 @@ local function on_jump()
       word_count = word_count + 1
     end
 
-    if word_count > 3 then
+    if word_count > 4 then
       pcall(function()
         require('hop').hint_words {
           current_line_only = true,
@@ -308,3 +308,11 @@ end
 
 vim.keymap.set('n', 'j', smart_move 'j', { noremap = true, silent = true })
 vim.keymap.set('n', 'k', smart_move 'k', { noremap = true, silent = true })
+
+vim.keymap.set('n', '<C-l>', '<C-^>', { noremap = true, silent = true })
+vim.keymap.set("n", "cw", "c<cmd>lua require('spider').motion('e')<CR>")
+vim.keymap.set("n", "dw", "d<cmd>lua require('spider').motion('e')<CR>")
+
+vim.keymap.set("n","<leader>e",function ()
+  require('molten').MoltenEvaluateVisual()
+end)
