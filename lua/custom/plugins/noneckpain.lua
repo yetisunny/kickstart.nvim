@@ -1,6 +1,7 @@
 return {
   'shortcuts/no-neck-pain.nvim',
   opts = {},
+  enabled=false,
   config = function()
     require('no-neck-pain').setup {
       buffers = {
