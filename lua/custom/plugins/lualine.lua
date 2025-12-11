@@ -17,16 +17,29 @@ return {
 
     local function filename_with_parent_dirs()
       local filename = vim.fn.expand '%:t' -- file name only
-      local path = vim.fn.expand '%:p:h' -- full path to the file's folder
+      local fullpath = vim.fn.expand '%:p:h' -- full path to file's folder
+      local home = vim.loop.os_homedir() -- get home directory
+
+      -- strip home directory prefix if present
+      local path = fullpath
+      if vim.startswith(path, home) then
+        path = path:sub(#home + 2) -- +2 to remove trailing slash
+      end
+
       local parts = vim.split(path, '/') -- split path into components
       local n = #parts
       local display = filename
+
       if n >= 2 then
-        -- show last two folders + filename
-        display = parts[n - 1] .. '/' .. parts[n] .. '/' .. filename
-      elseif n == 1 then
+        if n > 2 then
+          display = '…/' .. parts[n - 1] .. '/' .. parts[n] .. '/' .. filename
+        else
+          display = parts[n - 1] .. '/' .. parts[n] .. '/' .. filename
+        end
+      elseif n == 1 and parts[1] ~= '' then
         display = parts[1] .. '/' .. filename
       end
+
       return display
     end
     require('lualine').setup {
@@ -57,7 +70,7 @@ return {
         lualine_z = { 'location' },
       },
       tabline = {
-        lualine_a = { 'filename' },
+        lualine_a = { filename_with_parent_dirs },
       },
       extensions = { 'nvim-tree' },
     }
