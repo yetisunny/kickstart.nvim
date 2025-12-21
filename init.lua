@@ -309,7 +309,6 @@ end
 vim.keymap.set('n', 'j', smart_move 'j', { noremap = true, silent = true })
 vim.keymap.set('n', 'k', smart_move 'k', { noremap = true, silent = true })
 
-this is something
 vim.keymap.set("n", "cw", "c<cmd>lua require('spider').motion('e')<CR>")
 vim.keymap.set("n", "dw", "d<cmd>lua require('spider').motion('e')<CR>")
 
@@ -321,6 +320,10 @@ vim.keymap.set("n","<leader>m","@@")
   -- Triggered when the file changes on disk
 vim.opt.autoread = true
 
+-- Create an autocmd to check for changes more aggressively
+-- Create an autocmd to check for changes more aggressively
+-- Create an autocmd to check for changes more aggressively
+-- bugfix line
 -- Create an autocmd to check for changes more aggressively
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
     command = "if mode() != 'c' | checktime | endif",
