@@ -323,7 +323,6 @@ vim.opt.autoread = true
 -- Create an autocmd to check for changes more aggressively
 -- Create an autocmd to check for changes more aggressively
 -- Create an autocmd to check for changes more aggressively
--- bugfix line
 -- Create an autocmd to check for changes more aggressively
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
     command = "if mode() != 'c' | checktime | endif",
