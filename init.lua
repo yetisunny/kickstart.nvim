@@ -309,6 +309,7 @@ end
 vim.keymap.set('n', 'j', smart_move 'j', { noremap = true, silent = true })
 vim.keymap.set('n', 'k', smart_move 'k', { noremap = true, silent = true })
 
+this is something
 vim.keymap.set("n", "cw", "c<cmd>lua require('spider').motion('e')<CR>")
 vim.keymap.set("n", "dw", "d<cmd>lua require('spider').motion('e')<CR>")
 
