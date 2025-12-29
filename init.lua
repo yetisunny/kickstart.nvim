@@ -277,38 +277,6 @@ vim.api.nvim_create_user_command('CopyTree', function()
   print 'Directory tree copied to clipboard!'
 end, {})
 
-local function on_jump()
-  -- Small delay to let the screen update
-  vim.defer_fn(function()
-    local line = vim.api.nvim_get_current_line()
-    local word_count = 0
-    for _ in line:gmatch '%w+' do
-      word_count = word_count + 1
-    end
-
-    if word_count > 4 then
-      pcall(function()
-        require('hop').hint_words {
-          current_line_only = true,
-          keys = 'jmklnhueyio,.',
-        }
-      end)
-    end
-  end, 20) -- delay in milliseconds
-end
-
-local function smart_move(key)
-  return function()
-    local count = vim.v.count1
-    vim.cmd('normal! ' .. count .. key)
-    if count > 1 then
-      on_jump()
-    end
-  end
-end
-
-vim.keymap.set('n', 'j', smart_move 'j', { noremap = true, silent = true })
-vim.keymap.set('n', 'k', smart_move 'k', { noremap = true, silent = true })
 
 vim.keymap.set("n", "cw", "c<cmd>lua require('spider').motion('e')<CR>")
 vim.keymap.set("n", "dw", "d<cmd>lua require('spider').motion('e')<CR>")

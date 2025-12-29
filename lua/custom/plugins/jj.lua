@@ -88,6 +88,7 @@ return {
 
 
     -- This is an alias i use for moving bookmarks its so good
+    -- This is an alias i use for moving bookmarks its so good
     vim.keymap.set("n", "<leader>jt", function()
       cmd.j "tug"
       cmd.log {}
