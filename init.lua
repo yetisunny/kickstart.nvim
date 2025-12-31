@@ -249,6 +249,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
 })
 
 -- Check and create .rgignore if it doesn't exist
+-- Check and create .rgignore if it doesn't exist
 local home = os.getenv 'HOME'
 local rgignore_path = home .. '/.rgignore'
 local rgignore_file = io.open(rgignore_path, 'r')
@@ -293,3 +294,20 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHo
     command = "if mode() != 'c' | checktime | endif",
     pattern = "*",
 })
+
+if vim.env.SSH_TTY then
+    vim.g.clipboard = {
+        name = 'OSC 52',
+        copy = {
+            ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+            ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+        },
+        paste = {
+            ['+'] = function() return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')} end,
+            ['*'] = function() return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')} end,
+        },
+    }
+end
+
+-- Ensure yanking in Neovim hits the '+' register automatically
+vim.opt.clipboard = 'unnamedplus'

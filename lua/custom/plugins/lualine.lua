@@ -50,7 +50,7 @@ return {
       },
       sections = {
         lualine_a = { 'mode' },
-        lualine_b = { 'branch', 'diagnostics' },
+        lualine_b = {  'diagnostics' },
         lualine_c = { filename_with_parent_dirs },
         lualine_x = {
           'encoding',
@@ -63,7 +63,7 @@ return {
       },
       inactive_sections = {
         lualine_a = { 'mode' },
-        lualine_b = { 'branch', 'diagnostics' },
+        lualine_b = { 'diagnostics' },
         lualine_c = { filename_with_parent_dirs },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },

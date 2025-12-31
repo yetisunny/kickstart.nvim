@@ -1,12 +1,12 @@
 return {
   'zbirenbaum/copilot.lua',
   cmd = 'Copilot',
-  enabled = false, -- Disable by default, enable manually if needed
+  enabled = true, -- Disable by default, enable manually if needed
   event = 'InsertEnter',
   config = function()
     require('copilot').setup {
-      suggestion = { enabled = false },
-      panel = { enabled = false },
+      suggestion = { enabled = true },
+      panel = { enabled = true },
       filetypes = {
         yaml = false,
         latex = false,
@@ -18,7 +18,7 @@ return {
         hgcommit = false,
         svn = false,
         cvs = false,
-        ['.'] = false,
+        ['.'] = true,
       },
     }
   end,
