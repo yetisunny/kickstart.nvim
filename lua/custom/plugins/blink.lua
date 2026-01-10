@@ -56,11 +56,13 @@ return { -- Autocompletion
       -- <c-k>: Toggle signature help
       --
       -- See :h blink-cmp-config-keymap for defining your own keymap
-      preset = 'super-tab',
+      preset = 'enter',
       --arrow up or down for selecting
 
       ['<Up>'] = { 'select_prev', 'fallback' },
       ['<Down>'] = { 'select_next', 'fallback' },
+      ['<C-u>'] = { 'scroll_signature_up', 'fallback' },
+      ['<C-d>'] = { 'scroll_signature_down', 'fallback' },
 
       -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
       --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
@@ -75,14 +77,14 @@ return { -- Autocompletion
     completion = {
       -- By default, you may press `<c-space>` to show the documentation.
       -- Optionally, set `auto_show = true` to show the documentation after a delay.
-      documentation = { auto_show = true, auto_show_delay_ms = 500 },
+      documentation = { auto_show = false, auto_show_delay_ms = 100 },
       list = {
         selection = { preselect = true, auto_insert = false },
       },
     },
 
     sources = {
-      default = {  'lsp', 'path', 'buffer', 'snippets', 'lazydev' },
+      default = { 'lsp', 'path', 'buffer', 'snippets', 'lazydev' },
       providers = {
         lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
         buffer = {
@@ -102,19 +104,19 @@ return { -- Autocompletion
     -- the rust implementation via `'prefer_rust_with_warning'`
     --
     -- See :h blink-cmp-config-fuzzy for more information
-    fuzzy = { implementation = 'lua' },
+    fuzzy = { implementation = 'prefer_rust_with_warning' },
 
     -- Shows a signature help window while you type arguments for a function
     signature = { enabled = true },
 
-    cmdline= {
+    cmdline = {
 
       enabled = true,
       keymap = {
 
         ['<Up>'] = { 'select_prev', 'fallback' },
         ['<Down>'] = { 'select_next', 'fallback' },
-      }
-    }
+      },
+    },
   },
 }
