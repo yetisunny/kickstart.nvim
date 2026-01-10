@@ -279,8 +279,8 @@ vim.api.nvim_create_user_command('CopyTree', function()
 end, {})
 
 
-vim.keymap.set("n", "cw", "c<cmd>lua require('spider').motion('e')<CR>")
-vim.keymap.set("n", "dw", "d<cmd>lua require('spider').motion('e')<CR>")
+-- vim.keymap.set("n", "cw", "c<cmd>lua require('spider').motion('e')<CR>")
+-- vim.keymap.set("n", "dw", "d<cmd>lua require('spider').motion('e')<CR>")
 
 vim.keymap.set("n","<leader>e",function ()
   require('molten').MoltenEvaluateVisual()
