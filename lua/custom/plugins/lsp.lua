@@ -254,6 +254,7 @@ return {
         },
       },
       jsonls = {},
+      qmlls = {},
       --
 
       lua_ls = {

@@ -56,7 +56,7 @@ return { -- Autocompletion
       -- <c-k>: Toggle signature help
       --
       -- See :h blink-cmp-config-keymap for defining your own keymap
-      preset = 'enter',
+      preset = 'super-tab',
       --arrow up or down for selecting
 
       ['<Up>'] = { 'select_prev', 'fallback' },

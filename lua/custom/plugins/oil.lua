@@ -1,5 +1,5 @@
 return {
-  enabled = true,
+  enabled = false,
   'stevearc/oil.nvim',
   ---@module 'oil'
   ---@type oil.SetupOpts

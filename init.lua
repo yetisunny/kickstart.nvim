@@ -268,45 +268,47 @@ end
 -- Copies the current directory structure as a tree to the system clipboard
 vim.api.nvim_create_user_command('CopyTree', function()
   -- Use the 'tree' command if available, otherwise fallback to 'find'
-  local handle = io.popen 'tree -L 3 -a -I ".git" 2>/dev/null || find . -print | sed "s|[^/]*/| |g"'
-
+  local handle =
+    io.popen 'tree -L 3 -a -I ".git|.jj|node_modules|.expo|build|.gradle|.kotlin|.cxx|*.keystore" 2>/dev/null || find . -path "*/.git" -prune -o -path "*/.jj" -prune -o -path "*/node_modules" -prune -o -path "*/.expo" -prune -o -path "*/build" -prune -o -path "*/.gradle" -prune -o -path "*/.kotlin" -prune -o -path "*/.cxx" -prune -o -name "*.keystore" -prune -o -print | sed "s|[^/]*/| |g"'
   local result = handle:read '*a'
   handle:close()
-
   -- Copy to system clipboard
   vim.fn.setreg('+', result)
   print 'Directory tree copied to clipboard!'
 end, {})
 
-
 -- vim.keymap.set("n", "cw", "c<cmd>lua require('spider').motion('e')<CR>")
 -- vim.keymap.set("n", "dw", "d<cmd>lua require('spider').motion('e')<CR>")
 
-vim.keymap.set("n","<leader>e",function ()
+vim.keymap.set('n', '<leader>e', function()
   require('molten').MoltenEvaluateVisual()
 end)
 
-vim.keymap.set("n","<leader>m","@@")
-  -- Triggered when the file changes on disk
+vim.keymap.set('n', '<leader>m', '@@')
+-- Triggered when the file changes on disk
 vim.opt.autoread = true
 
-vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
-    command = "if mode() != 'c' | checktime | endif",
-    pattern = "*",
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold', 'CursorHoldI' }, {
+  command = "if mode() != 'c' | checktime | endif",
+  pattern = '*',
 })
 
 if vim.env.SSH_TTY then
-    vim.g.clipboard = {
-        name = 'OSC 52',
-        copy = {
-            ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-            ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
-        },
-        paste = {
-            ['+'] = function() return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')} end,
-            ['*'] = function() return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')} end,
-        },
-    }
+  vim.g.clipboard = {
+    name = 'OSC 52',
+    copy = {
+      ['+'] = require('vim.ui.clipboard.osc52').copy '+',
+      ['*'] = require('vim.ui.clipboard.osc52').copy '*',
+    },
+    paste = {
+      ['+'] = function()
+        return { vim.fn.split(vim.fn.getreg '', '\n'), vim.fn.getregtype '' }
+      end,
+      ['*'] = function()
+        return { vim.fn.split(vim.fn.getreg '', '\n'), vim.fn.getregtype '' }
+      end,
+    },
+  }
 end
 
 -- Ensure yanking in Neovim hits the '+' register automatically
