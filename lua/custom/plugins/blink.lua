@@ -77,16 +77,23 @@ return { -- Autocompletion
     completion = {
       -- By default, you may press `<c-space>` to show the documentation.
       -- Optionally, set `auto_show = true` to show the documentation after a delay.
-      documentation = { auto_show = false, auto_show_delay_ms = 100 },
+      documentation = { auto_show = true, auto_show_delay_ms = 100 },
+      ghost_text = { enabled = false },
       list = {
         selection = { preselect = true, auto_insert = false },
       },
     },
 
     sources = {
-      default = { 'lsp', 'path', 'buffer', 'snippets', 'lazydev' },
+      default = { 'lsp', 'path', 'buffer', 'snippets', 'lazydev', 'copilot' },
       providers = {
         lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+        copilot = {
+          name = 'copilot',
+          module = 'blink-cmp-copilot',
+          score_offset = 100,
+          async = true,
+        },
         buffer = {
           name = 'buffer',
           score_offset = -10,

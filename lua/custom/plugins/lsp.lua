@@ -227,8 +227,7 @@ return {
               inlayHints = {
                 callArgumentNames = true,
               },
-            },
-          },
+            }, },
         },
       },
       -- rust_analyzer = {},
@@ -238,7 +237,24 @@ return {
       --    https://github.com/pmizio/typescript-tools.nvim
       --
       -- But for many setups, the LSP (`ts_ls`) will work just fine
-      ts_ls = {},
+      ts_ls = {
+        handlers = {
+          -- Suppress unused variable/import diagnostics (codes 6133, 6196, 6192)
+          -- since ESLint already reports these.
+          ['textDocument/publishDiagnostics'] = function(err, result, ctx, config)
+            if result and result.diagnostics then
+              local clients = vim.lsp.get_clients { bufnr = ctx.bufnr, name = 'eslint' }
+              if #clients > 0 then
+                result.diagnostics = vim.tbl_filter(function(d)
+                  return d.code ~= 6133 and d.code ~= 6196 and d.code ~= 6192
+                end, result.diagnostics)
+              end
+            end
+            vim.lsp.handlers['textDocument/publishDiagnostics'](err, result, ctx, config)
+          end,
+        },
+      },
+      eslint = {},
       -- we need to use an old version, I installed this through mason
       angularls = {},
       tinymist = {},

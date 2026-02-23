@@ -1,4 +1,4 @@
-return{
+return {
   "giuxtaposition/blink-cmp-copilot",
-  enabled = false
+  enabled = true,
 }
