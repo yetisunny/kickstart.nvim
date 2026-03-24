@@ -313,3 +313,5 @@ end
 
 -- Ensure yanking in Neovim hits the '+' register automatically
 vim.opt.clipboard = 'unnamedplus'
+
+require("inline-diff").setup()
